@@ -33,6 +33,7 @@
 		885A46562F9CD09300A07FC2 /* smart-stationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "smart-stationUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		886B09112F9CD4F00011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
 		886B09432F9CD4FE0011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
+		886B09682F9CD7180011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -107,6 +108,13 @@
 			sourceTree = "<group>";
 		};
 		886B09442F9CD4FE0011F6E1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		886B09692F9CD7180011F6E1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -231,6 +239,10 @@
 				{
 					ProductGroup = 886B09122F9CD4F00011F6E1 /* Products */;
 					ProjectRef = 886B09112F9CD4F00011F6E1 /* smart-station.xcodeproj */;
+				},
+				{
+					ProductGroup = 886B09692F9CD7180011F6E1 /* Products */;
+					ProjectRef = 886B09682F9CD7180011F6E1 /* smart-station.xcodeproj */;
 				},
 			);
 			projectRoot = "";
