@@ -1,7 +1,7 @@
 import ComposableArchitecture
 import Foundation
 
-struct RatingsClient: Sendable {
+nonisolated struct RatingsClient: Sendable {
     var loadRatings: @Sendable () async throws -> [ArticleRatingEntry]
     var saveRating: @Sendable (_ entry: ArticleRatingEntry) async throws -> Void
     var removeRating: @Sendable (_ articleID: UUID) async throws -> Void

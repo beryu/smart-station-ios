@@ -15,7 +15,7 @@ struct ClockView: View {
                 .monospacedDigit()
                 .foregroundStyle(.primary)
 
-            Text(store.currentDate, format: .dateTime.second())
+            Text(String(format: "%02d", Calendar.current.component(.second, from: store.currentDate)))
                 .font(.system(size: 24, weight: .light, design: .rounded))
                 .monospacedDigit()
                 .foregroundStyle(.secondary)

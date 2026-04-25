@@ -1,6 +1,6 @@
 import Foundation
 
-struct SavedLocation: Codable, Equatable, Identifiable, Sendable {
+nonisolated struct SavedLocation: Codable, Equatable, Identifiable, Sendable {
     let id: UUID
     var name: String
     var latitude: Double

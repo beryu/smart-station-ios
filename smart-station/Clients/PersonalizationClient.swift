@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Foundation
 import FoundationModels
 
-struct PersonalizationClient: Sendable {
+nonisolated struct PersonalizationClient: Sendable {
     var rankArticles: @Sendable (
         _ articles: [NewsArticle],
         _ ratingHistory: [ArticleRatingEntry]

@@ -130,10 +130,12 @@ nonisolated struct DashboardFeature {
             switch action {
             case .onAppear:
                 state.isLoading = true
+                let clock = continuousClock
+                let location = locationClient
                 return .merge(
                     .send(.clock(.start)),
                     .run { send in
-                        let coordinate = try await locationClient.requestLocation()
+                        let coordinate = try await location.requestLocation()
                         await send(.locationResolved(
                             latitude: coordinate.latitude,
                             longitude: coordinate.longitude
@@ -142,7 +144,7 @@ nonisolated struct DashboardFeature {
                         await send(.locationPermissionDenied)
                     },
                     .run { send in
-                        for await _ in continuousClock.timer(interval: .seconds(900)) {
+                        for await _ in clock.timer(interval: .seconds(900)) {
                             await send(.autoRefreshTimerTicked)
                         }
                     }
@@ -157,6 +159,7 @@ nonisolated struct DashboardFeature {
                     isCurrentLocation: true
                 )
                 state.currentLocation = location
+                let locationClient = self.locationClient
                 return .merge(
                     .send(.fetchWeatherData),
                     .run { send in
@@ -193,15 +196,17 @@ nonisolated struct DashboardFeature {
                 state.errorMessage = nil
                 let lat = location.latitude
                 let lon = location.longitude
+                let weather = weatherClient
+                let airQuality = airQualityClient
                 return .merge(
                     .run { send in
-                        let result = try await weatherClient.fetchWeather(lat, lon)
+                        let result = try await weather.fetchWeather(lat, lon)
                         await send(.weatherDataResponse(.success(result)))
                     } catch: { error, send in
                         await send(.weatherDataResponse(.failure(error)))
                     },
                     .run { send in
-                        let result = try await airQualityClient.fetchAirQuality(lat, lon)
+                        let result = try await airQuality.fetchAirQuality(lat, lon)
                         await send(.airQualityDataResponse(.success(result)))
                     } catch: { error, send in
                         await send(.airQualityDataResponse(.failure(error)))

@@ -1,6 +1,6 @@
 import Foundation
 
-struct CalendarEvent: Equatable, Identifiable, Sendable {
+nonisolated struct CalendarEvent: Equatable, Identifiable, Sendable {
     let id: String
     let title: String
     let startDate: Date
@@ -12,17 +12,17 @@ struct CalendarEvent: Equatable, Identifiable, Sendable {
     let calendarID: String
 }
 
-struct CalendarInfo: Equatable, Identifiable, Sendable, Codable {
+nonisolated struct CalendarInfo: Equatable, Identifiable, Sendable, Codable {
     let id: String
     let title: String
     let colorHex: String
 }
 
-struct CalendarFilterSettings: Equatable, Sendable, Codable {
+nonisolated struct CalendarFilterSettings: Equatable, Sendable, Codable {
     var excludedCalendarIDs: Set<String> = []
 }
 
-enum CalendarPermissionStatus: Equatable, Sendable {
+nonisolated enum CalendarPermissionStatus: Equatable, Sendable {
     case notDetermined
     case authorized
     case denied

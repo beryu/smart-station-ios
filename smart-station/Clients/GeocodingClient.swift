@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Foundation
 
 @DependencyClient
-struct GeocodingClient: Sendable {
+nonisolated struct GeocodingClient: Sendable {
     var search: @Sendable (_ query: String) async throws -> [GeocodingResult]
 }
 

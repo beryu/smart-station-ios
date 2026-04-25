@@ -52,7 +52,7 @@ struct DashboardView: View {
         }
       }
     }
-    .overlay(alignment: .topTrailing) {
+    .overlay(alignment: .bottomTrailing) {
       Button {
         store.send(.addLocationButtonTapped)
       } label: {
