@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import Foundation
+import CoreLocation
 
 @Reducer
 nonisolated struct DashboardFeature {
@@ -157,10 +158,18 @@ nonisolated struct DashboardFeature {
                 return .none
 
             case .locationPermissionDenied:
-                state.isLoading = false
-                state.locationName = "位置情報なし"
-                state.errorMessage = "位置情報の許可がありません。手動で地域を追加してください。"
-                return .none
+                // Fall back to Tokyo so the app is always usable
+                let fallbackLat = 35.6762
+                let fallbackLon = 139.6503
+                let fallback = SavedLocation(
+                    name: "東京",
+                    latitude: fallbackLat,
+                    longitude: fallbackLon,
+                    isCurrentLocation: false
+                )
+                state.currentLocation = fallback
+                state.locationName = "東京（位置情報なし）"
+                return .send(.fetchWeatherData)
 
             case .fetchWeatherData:
                 guard let location = state.activeLocation else {
