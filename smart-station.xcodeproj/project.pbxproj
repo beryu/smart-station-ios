@@ -31,6 +31,7 @@
 		885A463D2F9CD09200A07FC2 /* smart-station.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "smart-station.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		885A464C2F9CD09300A07FC2 /* smart-stationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "smart-stationTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		885A46562F9CD09300A07FC2 /* smart-stationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "smart-stationUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		885E20D02F9CEE7F00208923 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
 		886B09112F9CD4F00011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
 		886B09432F9CD4FE0011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
 		886B09682F9CD7180011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
@@ -111,6 +112,13 @@
 				885A463D2F9CD09200A07FC2 /* smart-station.app */,
 				885A464C2F9CD09300A07FC2 /* smart-stationTests.xctest */,
 				885A46562F9CD09300A07FC2 /* smart-stationUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		885E20D12F9CEE7F00208923 /* Products */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -280,6 +288,10 @@
 				{
 					ProductGroup = 886B0A462F9CDE730011F6E1 /* Products */;
 					ProjectRef = 886B0A452F9CDE730011F6E1 /* smart-station.xcodeproj */;
+				},
+				{
+					ProductGroup = 885E20D12F9CEE7F00208923 /* Products */;
+					ProjectRef = 885E20D02F9CEE7F00208923 /* smart-station.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -485,11 +497,13 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "smart-station/Info.plist";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "今後の予定を表示するためにカレンダーへのアクセスを使用します。";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "現在地の天気情報を取得するために位置情報を使用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -522,11 +536,13 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "smart-station/Info.plist";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "今後の予定を表示するためにカレンダーへのアクセスを使用します。";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "現在地の天気情報を取得するために位置情報を使用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

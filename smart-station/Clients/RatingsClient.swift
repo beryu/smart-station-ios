@@ -1,7 +1,6 @@
 import ComposableArchitecture
 import Foundation
 
-@DependencyClient
 struct RatingsClient: Sendable {
     var loadRatings: @Sendable () async throws -> [ArticleRatingEntry]
     var saveRating: @Sendable (_ entry: ArticleRatingEntry) async throws -> Void
@@ -9,14 +8,19 @@ struct RatingsClient: Sendable {
 }
 
 extension RatingsClient: DependencyKey {
-    static let liveValue: RatingsClient = {
-        let storage = RatingsStorage()
-        return RatingsClient(
-            loadRatings: { try await storage.load() },
-            saveRating: { entry in try await storage.save(entry) },
-            removeRating: { articleID in try await storage.remove(articleID: articleID) }
-        )
-    }()
+    private static let storage = RatingsStorage()
+
+    static let liveValue = RatingsClient(
+        loadRatings: { try await storage.load() },
+        saveRating: { entry in try await storage.save(entry) },
+        removeRating: { articleID in try await storage.remove(articleID: articleID) }
+    )
+
+    static let testValue = RatingsClient(
+        loadRatings: { [] },
+        saveRating: { _ in },
+        removeRating: { _ in }
+    )
 }
 
 extension DependencyValues {
