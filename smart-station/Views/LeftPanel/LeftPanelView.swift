@@ -2,53 +2,44 @@ import ComposableArchitecture
 import SwiftUI
 
 struct LeftPanelView: View {
-    let store: StoreOf<DashboardFeature>
+  let store: StoreOf<DashboardFeature>
 
-    var body: some View {
-        VStack(spacing: 20) {
-            // Location name
-            HStack {
-                Image(systemName: store.currentLocation?.isCurrentLocation == true ? "location.fill" : "mappin.circle.fill")
-                    .foregroundStyle(.blue)
-                Text(store.locationName)
-                    .font(.title3.bold())
-            }
+  var body: some View {
+    VStack(spacing: 20) {
+      // Location name
+      HStack {
+        Image(systemName: store.currentLocation?.isCurrentLocation == true ? "location.fill" : "mappin.circle.fill")
+          .foregroundStyle(.blue)
+        Text(store.locationName)
+          .font(.title3.bold())
+      }
 
-            // Clock
-            ClockView(store: store.scope(state: \.clock, action: \.clock))
+      // Clock
+      ClockView(store: store.scope(state: \.clock, action: \.clock))
 
-            // Current weather card
-            CurrentWeatherCard(
-                weatherCode: store.currentWeatherCode,
-                temperature: store.currentTemperature,
-                apparentTemperature: store.weatherResponse?.current.apparentTemperature,
-                highTemp: store.todayHigh,
-                lowTemp: store.todayLow
-            )
-
-            // Humidity
-            HStack(spacing: 12) {
-                WeatherDetailCard(
-                    title: "気温",
-                    value: Formatters.temperature(store.currentTemperature),
-                    icon: "thermometer.medium",
-                    color: .orange
-                )
-                WeatherDetailCard(
-                    title: "湿度",
-                    value: Formatters.percentage(store.currentHumidity),
-                    icon: "humidity.fill",
-                    color: .cyan
-                )
-            }
-
-            // Sunrise / Sunset
-            SunriseSunsetView(
-                sunrise: store.sunrise,
-                sunset: store.sunset
-            )
-
-            Spacer()
+      ScrollView {
+        // Calendar Events
+        HStack {
+          Image(systemName: "calendar.badge.clock")
+            .foregroundStyle(.blue)
+          Text("今後の予定")
+            .font(.title3.bold())
+          Spacer()
+          Button {
+            store.send(.calendarEvents(.toggleMask))
+          } label: {
+            Image(systemName: store.calendarEvents.isMasked
+                  ? "eye.slash.fill" : "eye.fill")
+            .font(.callout)
+            .foregroundStyle(store.calendarEvents.isMasked ? .orange : .secondary)
+          }
+          .buttonStyle(.plain)
         }
+
+        CalendarEventsView(
+          store: store.scope(state: \.calendarEvents, action: \.calendarEvents)
+        )
+      }
     }
+  }
 }

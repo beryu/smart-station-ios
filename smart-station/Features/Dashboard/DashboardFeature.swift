@@ -9,6 +9,7 @@ nonisolated struct DashboardFeature {
         var clock = ClockFeature.State()
         var news = NewsFeature.State()
         var calendarEvents = CalendarEventsFeature.State()
+        var selectedArticleURL: URL?
         @Presents var locationSearch: LocationSearchFeature.State?
 
         // Location
@@ -98,6 +99,8 @@ nonisolated struct DashboardFeature {
         case weatherDataResponse(Result<WeatherResponse, Error>)
         case airQualityDataResponse(Result<AirQualityResponse, Error>)
         case autoRefreshTimerTicked
+        case selectArticle(URL)
+        case closeArticle
         case addLocationButtonTapped
         case selectLocation(SavedLocation.ID?)
     }
@@ -230,6 +233,14 @@ nonisolated struct DashboardFeature {
                     .send(.calendarEvents(.fetchEvents))
                 )
 
+            case let .selectArticle(url):
+                state.selectedArticleURL = url
+                return .none
+
+            case .closeArticle:
+                state.selectedArticleURL = nil
+                return .none
+
             case .addLocationButtonTapped:
                 state.locationSearch = LocationSearchFeature.State()
                 return .none
@@ -261,6 +272,10 @@ nonisolated struct DashboardFeature {
                 )
 
             case .clock:
+                return .none
+
+            case let .news(.articleTapped(url)):
+                state.selectedArticleURL = url
                 return .none
 
             case .news:

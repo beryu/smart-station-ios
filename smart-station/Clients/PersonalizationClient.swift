@@ -2,16 +2,20 @@ import ComposableArchitecture
 import Foundation
 import FoundationModels
 
-@DependencyClient
 struct PersonalizationClient: Sendable {
     var rankArticles: @Sendable (
         _ articles: [NewsArticle],
         _ ratingHistory: [ArticleRatingEntry]
     ) async throws -> [NewsArticle]
-    var isAvailable: @Sendable () -> Bool = { false }
+    var isAvailable: @Sendable () -> Bool
 }
 
 extension PersonalizationClient: DependencyKey {
+    static let testValue = PersonalizationClient(
+        rankArticles: { articles, _ in articles },
+        isAvailable: { false }
+    )
+
     static let liveValue = PersonalizationClient(
         rankArticles: { articles, ratingHistory in
             guard !ratingHistory.isEmpty else {
