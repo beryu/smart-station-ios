@@ -8,6 +8,7 @@ struct CalendarClient: Sendable {
     var requestAccess: @Sendable () async throws -> Bool
     var checkAuthorizationStatus: @Sendable () async -> CalendarPermissionStatus = { .notDetermined }
     var fetchUpcomingEvents: @Sendable (_ fromInterval: TimeInterval, _ toInterval: TimeInterval) async throws -> [CalendarEvent]
+    var fetchAvailableCalendars: @Sendable () async -> [CalendarInfo] = { [] }
 }
 
 // MARK: - MainActor-isolated EventKit wrapper
@@ -90,10 +91,37 @@ private final class EventKitStore {
                 isAllDay: event.isAllDay,
                 location: event.location,
                 calendarColorHex: hex,
-                calendarTitle: event.calendar?.title ?? ""
+                calendarTitle: event.calendar?.title ?? "",
+                calendarID: event.calendar?.calendarIdentifier ?? ""
             ))
         }
         return results
+    }
+
+    func fetchAvailableCalendars() -> [CalendarInfo] {
+        let status = EKEventStore.authorizationStatus(for: .event)
+        guard status == .fullAccess || status == .authorized else { return [] }
+        let freshStore = EKEventStore()
+        let calendars = freshStore.calendars(for: .event)
+        return calendars.map { cal in
+            let hex: String
+            if let cgColor = cal.cgColor {
+                let uiColor = UIColor(cgColor: cgColor)
+                var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0
+                uiColor.getRed(&r, green: &g, blue: &b, alpha: nil)
+                hex = String(
+                    format: "#%02X%02X%02X",
+                    Int(r * 255), Int(g * 255), Int(b * 255)
+                )
+            } else {
+                hex = "#808080"
+            }
+            return CalendarInfo(
+                id: cal.calendarIdentifier,
+                title: cal.title,
+                colorHex: hex
+            )
+        }.sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending }
     }
 }
 
@@ -109,6 +137,9 @@ extension CalendarClient: DependencyKey {
         },
         fetchUpcomingEvents: { fromInterval, toInterval in
             await EventKitStore.shared.fetchUpcomingEvents(fromInterval: fromInterval, toInterval: toInterval)
+        },
+        fetchAvailableCalendars: {
+            await EventKitStore.shared.fetchAvailableCalendars()
         }
     )
 }

@@ -39,6 +39,7 @@
 		886B09682F9CD7180011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
 		886B09E92F9CDB9C0011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
 		886B0A452F9CDE730011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
+		889B80B82F9D13E800BC1666 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -174,6 +175,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		889B80B92F9D13E800BC1666 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -286,12 +294,12 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 886B09442F9CD4FE0011F6E1 /* Products */;
-					ProjectRef = 886B09432F9CD4FE0011F6E1 /* smart-station.xcodeproj */;
-				},
-				{
 					ProductGroup = 886116F52F9CF84E00AB057F /* Products */;
 					ProjectRef = 886116F42F9CF84E00AB057F /* smart-station.xcodeproj */;
+				},
+				{
+					ProductGroup = 889B80B92F9D13E800BC1666 /* Products */;
+					ProjectRef = 889B80B82F9D13E800BC1666 /* smart-station.xcodeproj */;
 				},
 				{
 					ProductGroup = 886B09122F9CD4F00011F6E1 /* Products */;
@@ -306,12 +314,16 @@
 					ProjectRef = 886B09682F9CD7180011F6E1 /* smart-station.xcodeproj */;
 				},
 				{
-					ProductGroup = 886B0A462F9CDE730011F6E1 /* Products */;
-					ProjectRef = 886B0A452F9CDE730011F6E1 /* smart-station.xcodeproj */;
-				},
-				{
 					ProductGroup = 885E214C2F9CF63400208923 /* Products */;
 					ProjectRef = 885E214B2F9CF63400208923 /* smart-station.xcodeproj */;
+				},
+				{
+					ProductGroup = 886B09442F9CD4FE0011F6E1 /* Products */;
+					ProjectRef = 886B09432F9CD4FE0011F6E1 /* smart-station.xcodeproj */;
+				},
+				{
+					ProductGroup = 886B0A462F9CDE730011F6E1 /* Products */;
+					ProjectRef = 886B0A452F9CDE730011F6E1 /* smart-station.xcodeproj */;
 				},
 				{
 					ProductGroup = 885E20D12F9CEE7F00208923 /* Products */;

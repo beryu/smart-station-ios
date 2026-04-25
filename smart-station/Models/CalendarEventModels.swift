@@ -9,6 +9,17 @@ struct CalendarEvent: Equatable, Identifiable, Sendable {
     let location: String?
     let calendarColorHex: String
     let calendarTitle: String
+    let calendarID: String
+}
+
+struct CalendarInfo: Equatable, Identifiable, Sendable, Codable {
+    let id: String
+    let title: String
+    let colorHex: String
+}
+
+struct CalendarFilterSettings: Equatable, Sendable, Codable {
+    var excludedCalendarIDs: Set<String> = []
 }
 
 enum CalendarPermissionStatus: Equatable, Sendable {
