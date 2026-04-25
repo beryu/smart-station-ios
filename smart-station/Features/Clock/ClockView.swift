@@ -5,10 +5,10 @@ struct ClockView: View {
     let store: StoreOf<ClockFeature>
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 4) {
             Text(Formatters.fullDate(from: store.currentDate))
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .font(.system(size: 32, weight: .semibold, design: .rounded))
+                .foregroundStyle(.primary.opacity(0.85))
 
             Text(store.currentDate, format: .dateTime.hour().minute())
                 .font(.system(size: 72, weight: .bold, design: .rounded))

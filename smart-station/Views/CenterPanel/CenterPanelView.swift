@@ -7,19 +7,31 @@ struct CenterPanelView: View {
     var body: some View {
         VStack(spacing: 16) {
             HStack {
-                Image(systemName: "chart.bar.doc.horizontal")
+                Image(systemName: "newspaper.fill")
                     .foregroundStyle(.blue)
-                Text("気象詳細")
+                Text("ニュース")
                     .font(.title3.bold())
+                Spacer()
+                if store.news.isPersonalizationAvailable {
+                    HStack(spacing: 4) {
+                        Image(systemName: "brain")
+                            .font(.caption2)
+                        Text("パーソナライズ")
+                            .font(.caption2)
+                    }
+                    .foregroundStyle(.green)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(.green.opacity(0.15), in: Capsule())
+                }
             }
 
-            WeatherDetailGridView(
-                weatherResponse: store.weatherResponse,
-                airQualityResponse: store.airQualityResponse,
-                currentVisibility: store.currentVisibility
+            NewsFeedView(
+                store: store.scope(state: \.news, action: \.news)
             )
-
-            Spacer()
+        }
+        .onAppear {
+            store.send(.news(.onAppear))
         }
     }
 }
