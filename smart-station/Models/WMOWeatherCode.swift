@@ -1,6 +1,6 @@
 import Foundation
 
-enum WMOWeatherCode: Int, CaseIterable, Sendable {
+nonisolated enum WMOWeatherCode: Int, CaseIterable, Sendable {
     case clearSky = 0
     case mainlyClear = 1
     case partlyCloudy = 2

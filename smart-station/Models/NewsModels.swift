@@ -3,7 +3,7 @@ import FoundationModels
 
 // MARK: - News Article
 
-struct NewsArticle: Codable, Equatable, Identifiable, Sendable {
+nonisolated struct NewsArticle: Codable, Equatable, Identifiable, Sendable {
     let id: UUID
     let title: String
     let description: String
@@ -33,12 +33,12 @@ struct NewsArticle: Codable, Equatable, Identifiable, Sendable {
 
 // MARK: - User Rating
 
-enum ArticleRating: String, Codable, Equatable, Sendable {
+nonisolated enum ArticleRating: String, Codable, Equatable, Sendable {
     case good
     case bad
 }
 
-struct ArticleRatingEntry: Codable, Equatable, Identifiable, Sendable {
+nonisolated struct ArticleRatingEntry: Codable, Equatable, Identifiable, Sendable {
     let id: UUID
     let articleID: UUID
     let articleTitle: String

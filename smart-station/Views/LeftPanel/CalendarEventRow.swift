@@ -37,9 +37,16 @@ struct CalendarEventRow: View {
               .foregroundStyle(.primary)
           }
           if event.isAllDay {
-            Text("終日")
-              .font(.caption.bold())
-              .foregroundStyle(.cyan)
+            let endDay = Calendar.current.date(byAdding: .day, value: -1, to: event.endDate) ?? event.endDate
+            if Calendar.current.isDate(event.startDate, inSameDayAs: endDay) {
+              Text("終日")
+                .font(.caption.bold())
+                .foregroundStyle(.cyan)
+            } else {
+              Text("終日 〜\(Self.dateFormatter.string(from: endDay))")
+                .font(.caption.bold())
+                .foregroundStyle(.cyan)
+            }
           } else {
             Text("\(Self.timeFormatter.string(from: event.startDate))–\(Self.timeFormatter.string(from: event.endDate))")
               .font(.callout.bold().monospacedDigit())

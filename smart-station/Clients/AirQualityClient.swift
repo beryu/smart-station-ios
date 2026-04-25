@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Foundation
 
 @DependencyClient
-struct AirQualityClient: Sendable {
+nonisolated struct AirQualityClient: Sendable {
     var fetchAirQuality: @Sendable (_ latitude: Double, _ longitude: Double) async throws -> AirQualityResponse
 }
 

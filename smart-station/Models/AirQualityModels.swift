@@ -1,11 +1,11 @@
 import Foundation
 
-struct AirQualityResponse: Codable, Equatable, Sendable {
+nonisolated struct AirQualityResponse: Codable, Equatable, Sendable {
     let current: AirQualityCurrent?
     let hourly: AirQualityHourly?
 }
 
-struct AirQualityCurrent: Codable, Equatable, Sendable {
+nonisolated struct AirQualityCurrent: Codable, Equatable, Sendable {
     let time: String
     let usAqi: Int?
     let pm25: Double?
@@ -19,7 +19,7 @@ struct AirQualityCurrent: Codable, Equatable, Sendable {
     }
 }
 
-struct AirQualityHourly: Codable, Equatable, Sendable {
+nonisolated struct AirQualityHourly: Codable, Equatable, Sendable {
     let time: [String]
     let pm25: [Double?]
     let pm10: [Double?]

@@ -1,6 +1,6 @@
 import Foundation
 
-struct WeatherResponse: Codable, Equatable, Sendable {
+nonisolated struct WeatherResponse: Codable, Equatable, Sendable {
     let latitude: Double
     let longitude: Double
     let timezone: String
@@ -9,7 +9,7 @@ struct WeatherResponse: Codable, Equatable, Sendable {
     let daily: DailyWeather
 }
 
-struct CurrentWeather: Codable, Equatable, Sendable {
+nonisolated struct CurrentWeather: Codable, Equatable, Sendable {
     let time: String
     let temperature2m: Double
     let relativeHumidity2m: Int
@@ -35,12 +35,12 @@ struct CurrentWeather: Codable, Equatable, Sendable {
     }
 }
 
-struct HourlyWeather: Codable, Equatable, Sendable {
+nonisolated struct HourlyWeather: Codable, Equatable, Sendable {
     let time: [String]
     let visibility: [Double?]
 }
 
-struct DailyWeather: Codable, Equatable, Sendable {
+nonisolated struct DailyWeather: Codable, Equatable, Sendable {
     let time: [String]
     let weatherCode: [Int]
     let temperature2mMax: [Double]
@@ -65,7 +65,7 @@ struct DailyWeather: Codable, Equatable, Sendable {
     }
 }
 
-struct DailyForecast: Equatable, Identifiable, Sendable {
+nonisolated struct DailyForecast: Equatable, Identifiable, Sendable {
     var id: String { date }
     let date: String
     let weatherCode: Int

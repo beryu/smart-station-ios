@@ -39,11 +39,12 @@ nonisolated struct NewsFeature {
             switch action {
             case .onAppear:
                 state.isPersonalizationAvailable = personalizationClient.isAvailable()
+                let ratings = ratingsClient
                 return .merge(
                     .send(.fetchNews),
                     .run { send in
-                        let ratings = try await ratingsClient.loadRatings()
-                        await send(.ratingsLoaded(.success(ratings)))
+                        let loaded = try await ratings.loadRatings()
+                        await send(.ratingsLoaded(.success(loaded)))
                     } catch: { error, send in
                         await send(.ratingsLoaded(.failure(error)))
                     }
@@ -52,8 +53,9 @@ nonisolated struct NewsFeature {
             case .fetchNews:
                 state.isLoading = true
                 state.errorMessage = nil
+                let news = newsClient
                 return .run { send in
-                    let articles = try await newsClient.fetchTopHeadlines()
+                    let articles = try await news.fetchTopHeadlines()
                     await send(.newsResponse(.success(articles)))
                 } catch: { error, send in
                     await send(.newsResponse(.failure(error)))
@@ -65,8 +67,9 @@ nonisolated struct NewsFeature {
                 state.isLoading = false
                 if !state.ratingHistory.isEmpty {
                     let history = state.ratingHistory
+                    let personalization = personalizationClient
                     return .run { send in
-                        let ranked = try await personalizationClient.rankArticles(articles, history)
+                        let ranked = try await personalization.rankArticles(articles, history)
                         await send(.articlesRanked(.success(ranked)))
                     } catch: { error, send in
                         await send(.articlesRanked(.failure(error)))
@@ -86,8 +89,9 @@ nonisolated struct NewsFeature {
                 }
                 if !state.articles.isEmpty && !ratings.isEmpty {
                     let articles = state.articles
+                    let personalization = personalizationClient
                     return .run { send in
-                        let ranked = try await personalizationClient.rankArticles(articles, ratings)
+                        let ranked = try await personalization.rankArticles(articles, ratings)
                         await send(.articlesRanked(.success(ranked)))
                     } catch: { error, send in
                         await send(.articlesRanked(.failure(error)))
@@ -99,6 +103,7 @@ nonisolated struct NewsFeature {
                 return .none
 
             case let .rateArticle(articleID, rating):
+                let ratingsClient = self.ratingsClient
                 if state.currentRatings[articleID] == rating {
                     state.currentRatings.removeValue(forKey: articleID)
                     return .run { send in

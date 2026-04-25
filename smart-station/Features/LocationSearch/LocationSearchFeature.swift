@@ -36,9 +36,11 @@ nonisolated struct LocationSearchFeature {
                     return .cancel(id: CancelID.search)
                 }
                 state.isSearching = true
+                let continuousClock = self.clock
+                let geocoding = self.geocodingClient
                 return .run { send in
-                    try await self.clock.sleep(for: .milliseconds(300))
-                    let results = try await geocodingClient.search(text)
+                    try await continuousClock.sleep(for: .milliseconds(300))
+                    let results = try await geocoding.search(text)
                     await send(.searchResponse(results))
                 }
                 .cancellable(id: CancelID.search, cancelInFlight: true)

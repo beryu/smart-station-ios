@@ -22,8 +22,9 @@ nonisolated struct ClockFeature {
         Reduce { state, action in
             switch action {
             case .start:
+                let clock = self.clock
                 return .run { send in
-                    for await _ in self.clock.timer(interval: .seconds(1)) {
+                    for await _ in clock.timer(interval: .seconds(1)) {
                         await send(.tick)
                     }
                 }

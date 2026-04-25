@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Foundation
 
 @DependencyClient
-struct NewsClient: Sendable {
+nonisolated struct NewsClient: Sendable {
     var fetchTopHeadlines: @Sendable () async throws -> [NewsArticle]
 }
 

@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 
 @DependencyClient
-struct CalendarClient: Sendable {
+nonisolated struct CalendarClient: Sendable {
     var requestAccess: @Sendable () async throws -> Bool
     var checkAuthorizationStatus: @Sendable () async -> CalendarPermissionStatus = { .notDetermined }
     var fetchUpcomingEvents: @Sendable (_ fromInterval: TimeInterval, _ toInterval: TimeInterval) async throws -> [CalendarEvent]

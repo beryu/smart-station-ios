@@ -50,13 +50,15 @@ nonisolated struct CalendarEventsFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                let calendar = calendarClient
+                let filter = calendarFilterClient
                 return .merge(
                     .run { send in
-                        let status = await calendarClient.checkAuthorizationStatus()
+                        let status = await calendar.checkAuthorizationStatus()
                         await send(.permissionResponse(status))
                     },
                     .run { send in
-                        let settings = try await calendarFilterClient.loadSettings()
+                        let settings = try await filter.loadSettings()
                         await send(.filterSettingsLoaded(.success(settings)))
                     } catch: { error, send in
                         await send(.filterSettingsLoaded(.failure(error)))
@@ -67,16 +69,18 @@ nonisolated struct CalendarEventsFeature {
                 state.permissionStatus = status
                 switch status {
                 case .authorized:
+                    let calendar = calendarClient
                     return .merge(
                         .send(.fetchEvents),
                         .run { send in
-                            let calendars = await calendarClient.fetchAvailableCalendars()
+                            let calendars = await calendar.fetchAvailableCalendars()
                             await send(.availableCalendarsResponse(calendars))
                         }
                     )
                 case .notDetermined:
+                    let calendar = calendarClient
                     return .run { send in
-                        let granted = try await calendarClient.requestAccess()
+                        let granted = try await calendar.requestAccess()
                         await send(.permissionResponse(granted ? .authorized : .denied))
                     } catch: { _, send in
                         await send(.permissionResponse(.denied))
@@ -88,14 +92,15 @@ nonisolated struct CalendarEventsFeature {
             case .fetchEvents:
                 state.isLoading = true
                 state.errorMessage = nil
-                let calendar = Calendar.current
-                let startOfToday = calendar.startOfDay(for: now)
-                guard let endDate = calendar.date(byAdding: .day, value: 8, to: startOfToday) else {
+                let cal = Calendar.current
+                let startOfToday = cal.startOfDay(for: now)
+                guard let endDate = cal.date(byAdding: .day, value: 8, to: startOfToday) else {
                     state.isLoading = false
                     return .none
                 }
                 let fromInterval = startOfToday.timeIntervalSinceReferenceDate
                 let toInterval = endDate.timeIntervalSinceReferenceDate
+                let calendarClient = self.calendarClient
                 return .run { send in
                     let events = try await calendarClient.fetchUpcomingEvents(fromInterval, toInterval)
                     await send(.eventsResponse(.success(events)))
@@ -130,8 +135,9 @@ nonisolated struct CalendarEventsFeature {
 
             case .filterButtonTapped:
                 state.isFilterSheetPresented = true
+                let calendar = calendarClient
                 return .run { send in
-                    let calendars = await calendarClient.fetchAvailableCalendars()
+                    let calendars = await calendar.fetchAvailableCalendars()
                     await send(.availableCalendarsResponse(calendars))
                 }
 
@@ -150,8 +156,9 @@ nonisolated struct CalendarEventsFeature {
                     state.excludedCalendarIDs.insert(calendarID)
                 }
                 let settings = CalendarFilterSettings(excludedCalendarIDs: state.excludedCalendarIDs)
+                let filter = calendarFilterClient
                 return .run { _ in
-                    try await calendarFilterClient.saveSettings(settings)
+                    try await filter.saveSettings(settings)
                 }
             }
         }

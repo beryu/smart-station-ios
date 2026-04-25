@@ -1,7 +1,7 @@
 import ComposableArchitecture
 import Foundation
 
-struct CalendarFilterClient: Sendable {
+nonisolated struct CalendarFilterClient: Sendable {
     var loadSettings: @Sendable () async throws -> CalendarFilterSettings
     var saveSettings: @Sendable (_ settings: CalendarFilterSettings) async throws -> Void
 }
