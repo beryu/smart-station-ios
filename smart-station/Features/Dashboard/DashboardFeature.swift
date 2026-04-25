@@ -8,6 +8,7 @@ nonisolated struct DashboardFeature {
     struct State: Equatable {
         var clock = ClockFeature.State()
         var news = NewsFeature.State()
+        var calendarEvents = CalendarEventsFeature.State()
         @Presents var locationSearch: LocationSearchFeature.State?
 
         // Location
@@ -88,6 +89,7 @@ nonisolated struct DashboardFeature {
         case onDisappear
         case clock(ClockFeature.Action)
         case news(NewsFeature.Action)
+        case calendarEvents(CalendarEventsFeature.Action)
         case locationSearch(PresentationAction<LocationSearchFeature.Action>)
         case locationResolved(latitude: Double, longitude: Double)
         case locationNameResolved(String)
@@ -116,6 +118,9 @@ nonisolated struct DashboardFeature {
         }
         Scope(state: \.news, action: \.news) {
             NewsFeature()
+        }
+        Scope(state: \.calendarEvents, action: \.calendarEvents) {
+            CalendarEventsFeature()
         }
 
         Reduce { state, action in
@@ -221,7 +226,8 @@ nonisolated struct DashboardFeature {
             case .autoRefreshTimerTicked:
                 return .merge(
                     .send(.fetchWeatherData),
-                    .send(.news(.fetchNews))
+                    .send(.news(.fetchNews)),
+                    .send(.calendarEvents(.fetchEvents))
                 )
 
             case .addLocationButtonTapped:
@@ -258,6 +264,9 @@ nonisolated struct DashboardFeature {
                 return .none
 
             case .news:
+                return .none
+
+            case .calendarEvents:
                 return .none
             }
         }
