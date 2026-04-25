@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		886B09522F9CD5A30011F6E1 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 886B09512F9CD5A30011F6E1 /* ComposableArchitecture */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		885A464D2F9CD09300A07FC2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,8 @@
 		885A463D2F9CD09200A07FC2 /* smart-station.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "smart-station.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		885A464C2F9CD09300A07FC2 /* smart-stationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "smart-stationTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		885A46562F9CD09300A07FC2 /* smart-stationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "smart-stationUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		886B09112F9CD4F00011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
+		886B09432F9CD4FE0011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -52,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				886B09522F9CD5A30011F6E1 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +99,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		886B09122F9CD4F00011F6E1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		886B09442F9CD4FE0011F6E1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -112,6 +133,7 @@
 			);
 			name = "smart-station";
 			packageProductDependencies = (
+				886B09512F9CD5A30011F6E1 /* ComposableArchitecture */,
 			);
 			productName = "smart-station";
 			productReference = 885A463D2F9CD09200A07FC2 /* smart-station.app */;
@@ -195,9 +217,22 @@
 			);
 			mainGroup = 885A46342F9CD09200A07FC2;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				886B09502F9CD5A30011F6E1 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 885A463E2F9CD09200A07FC2 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 886B09442F9CD4FE0011F6E1 /* Products */;
+					ProjectRef = 886B09432F9CD4FE0011F6E1 /* smart-station.xcodeproj */;
+				},
+				{
+					ProductGroup = 886B09122F9CD4F00011F6E1 /* Products */;
+					ProjectRef = 886B09112F9CD4F00011F6E1 /* smart-station.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				885A463C2F9CD09200A07FC2 /* smart-station */,
@@ -586,6 +621,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		886B09502F9CD5A30011F6E1 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.25.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		886B09512F9CD5A30011F6E1 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 886B09502F9CD5A30011F6E1 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 885A46352F9CD09200A07FC2 /* Project object */;
 }

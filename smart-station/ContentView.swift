@@ -5,57 +5,51 @@
 //  Created by Ryuta Kibe on 2026/04/25.
 //
 
+import ComposableArchitecture
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-  @Environment(\.modelContext) private var modelContext
-  @Query private var items: [Item]
-  
-  var body: some View {
-    NavigationSplitView {
-      List {
-        ForEach(items) { item in
-          NavigationLink {
-            Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-          } label: {
-            Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-          }
+    let store: StoreOf<AppFeature>
+
+    var body: some View {
+        NavigationSplitView {
+            List {
+                ForEach(store.items) { item in
+                    NavigationLink {
+                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                    } label: {
+                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                    }
+                }
+                .onDelete { offsets in
+                    store.send(.deleteItems(offsets), animation: .default)
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+                ToolbarItem {
+                    Button {
+                        store.send(.addItemButtonTapped, animation: .default)
+                    } label: {
+                        Label("Add Item", systemImage: "plus")
+                    }
+                }
+            }
+            .onAppear {
+                store.send(.onAppear)
+            }
+        } detail: {
+            Text("Select an item")
         }
-        .onDelete(perform: deleteItems)
-      }
-      .toolbar {
-        ToolbarItem(placement: .navigationBarTrailing) {
-          EditButton()
-        }
-        ToolbarItem {
-          Button(action: addItem) {
-            Label("Add Item", systemImage: "plus")
-          }
-        }
-      }
-    } detail: {
-      Text("Select an item")
     }
-  }
-  
-  private func addItem() {
-    withAnimation {
-      let newItem = Item(timestamp: Date())
-      modelContext.insert(newItem)
-    }
-  }
-  
-  private func deleteItems(offsets: IndexSet) {
-    withAnimation {
-      for index in offsets {
-        modelContext.delete(items[index])
-      }
-    }
-  }
 }
 
 #Preview {
-  ContentView()
-    .modelContainer(for: Item.self, inMemory: true)
+    ContentView(
+        store: Store(initialState: AppFeature.State()) {
+            AppFeature()
+        }
+    )
 }
