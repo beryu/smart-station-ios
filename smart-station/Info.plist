@@ -4,5 +4,7 @@
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>現在地の天気情報を取得するために位置情報を使用します。</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>今後の予定を表示するためにカレンダーへのアクセスを使用します。</string>
 </dict>
 </plist>
