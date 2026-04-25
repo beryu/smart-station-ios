@@ -62,4 +62,11 @@ enum Formatters {
         guard let date = formatter.date(from: dateString) else { return false }
         return Calendar.current.isDateInToday(date)
     }
+
+    static func relativeTime(from date: Date) -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.unitsStyle = .abbreviated
+        return formatter.localizedString(for: date, relativeTo: Date())
+    }
 }
