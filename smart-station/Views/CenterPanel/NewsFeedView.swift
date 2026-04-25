@@ -51,6 +51,9 @@ struct NewsFeedView: View {
                     }
                     .padding(.vertical, 4)
                 }
+                .refreshable {
+                    await store.send(.refreshButtonTapped).finish()
+                }
             }
         }
     }
