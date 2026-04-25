@@ -34,11 +34,25 @@
 		886B09112F9CD4F00011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
 		886B09432F9CD4FE0011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
 		886B09682F9CD7180011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
+		886B09E92F9CDB9C0011F6E1 /* smart-station.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "smart-station.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		886B0A182F9CDC340011F6E1 /* Exceptions for "smart-station" folder in "smart-station" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 885A463C2F9CD09200A07FC2 /* smart-station */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		885A463F2F9CD09200A07FC2 /* smart-station */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				886B0A182F9CDC340011F6E1 /* Exceptions for "smart-station" folder in "smart-station" target */,
+			);
 			path = "smart-station";
 			sourceTree = "<group>";
 		};
@@ -115,6 +129,13 @@
 			sourceTree = "<group>";
 		};
 		886B09692F9CD7180011F6E1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		886B09EA2F9CDB9C0011F6E1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -239,6 +260,10 @@
 				{
 					ProductGroup = 886B09122F9CD4F00011F6E1 /* Products */;
 					ProjectRef = 886B09112F9CD4F00011F6E1 /* smart-station.xcodeproj */;
+				},
+				{
+					ProductGroup = 886B09EA2F9CDB9C0011F6E1 /* Products */;
+					ProjectRef = 886B09E92F9CDB9C0011F6E1 /* smart-station.xcodeproj */;
 				},
 				{
 					ProductGroup = 886B09692F9CD7180011F6E1 /* Products */;
@@ -447,6 +472,7 @@
 				DEVELOPMENT_TEAM = 8A7X4PEZU7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "smart-station/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -483,6 +509,7 @@
 				DEVELOPMENT_TEAM = 8A7X4PEZU7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "smart-station/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
