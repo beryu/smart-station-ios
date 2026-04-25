@@ -22,6 +22,7 @@ nonisolated struct NewsFeature {
         case ratingSaved(Result<Void, Error>)
         case ratingRemoved(articleID: UUID)
         case articlesRanked(Result<[NewsArticle], Error>)
+        case articleTapped(url: URL)
         case refreshButtonTapped
     }
 
@@ -139,6 +140,9 @@ nonisolated struct NewsFeature {
                 return .none
 
             case .articlesRanked(.failure):
+                return .none
+
+            case .articleTapped:
                 return .none
 
             case .refreshButtonTapped:

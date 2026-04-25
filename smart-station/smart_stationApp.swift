@@ -10,13 +10,13 @@ import SwiftUI
 
 @main
 struct smart_stationApp: App {
-    var body: some Scene {
-        WindowGroup {
-            DashboardView(
-                store: Store(initialState: DashboardFeature.State()) {
-                    DashboardFeature()
-                }
-            )
+  var body: some Scene {
+    WindowGroup {
+      DashboardView(
+        store: Store(initialState: DashboardFeature.State()) {
+          DashboardFeature()
         }
+      )
     }
+  }
 }
