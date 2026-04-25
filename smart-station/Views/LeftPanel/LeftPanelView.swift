@@ -26,6 +26,17 @@ struct LeftPanelView: View {
             .font(.title3.bold())
           Spacer()
           Button {
+            store.send(.calendarEvents(.filterButtonTapped))
+          } label: {
+            Image(systemName: "line.3.horizontal.decrease.circle")
+              .font(.callout)
+              .foregroundColor(
+                store.calendarEvents.excludedCalendarIDs.isEmpty
+                  ? .secondary : .blue
+              )
+          }
+          .buttonStyle(.plain)
+          Button {
             store.send(.calendarEvents(.toggleMask))
           } label: {
             Image(systemName: store.calendarEvents.isMasked
@@ -34,6 +45,16 @@ struct LeftPanelView: View {
             .foregroundStyle(store.calendarEvents.isMasked ? .orange : .secondary)
           }
           .buttonStyle(.plain)
+        }
+        .sheet(isPresented: Binding(
+          get: { store.calendarEvents.isFilterSheetPresented },
+          set: { newValue in
+            if !newValue { store.send(.calendarEvents(.dismissFilter)) }
+          }
+        )) {
+          CalendarFilterView(
+            store: store.scope(state: \.calendarEvents, action: \.calendarEvents)
+          )
         }
 
         CalendarEventsView(

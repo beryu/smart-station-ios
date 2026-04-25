@@ -10,6 +10,16 @@ nonisolated struct CalendarEventsFeature {
         var isLoading: Bool = false
         var errorMessage: String?
         var isMasked: Bool = false
+
+        // Calendar filter
+        var availableCalendars: [CalendarInfo] = []
+        var excludedCalendarIDs: Set<String> = []
+        var isFilterSheetPresented: Bool = false
+
+        var filteredEvents: [CalendarEvent] {
+            if excludedCalendarIDs.isEmpty { return events }
+            return events.filter { !excludedCalendarIDs.contains($0.calendarID) }
+        }
     }
 
     enum Action {
@@ -19,9 +29,17 @@ nonisolated struct CalendarEventsFeature {
         case permissionResponse(CalendarPermissionStatus)
         case toggleMask
         case openSettingsTapped
+
+        // Calendar filter
+        case filterButtonTapped
+        case dismissFilter
+        case toggleCalendar(String)
+        case availableCalendarsResponse([CalendarInfo])
+        case filterSettingsLoaded(Result<CalendarFilterSettings, Error>)
     }
 
     @Dependency(\.calendarClient) var calendarClient
+    @Dependency(\.calendarFilterClient) var calendarFilterClient
     @Dependency(\.date.now) var now
 
     private enum CancelID {
@@ -32,16 +50,30 @@ nonisolated struct CalendarEventsFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .run { send in
-                    let status = await calendarClient.checkAuthorizationStatus()
-                    await send(.permissionResponse(status))
-                }
+                return .merge(
+                    .run { send in
+                        let status = await calendarClient.checkAuthorizationStatus()
+                        await send(.permissionResponse(status))
+                    },
+                    .run { send in
+                        let settings = try await calendarFilterClient.loadSettings()
+                        await send(.filterSettingsLoaded(.success(settings)))
+                    } catch: { error, send in
+                        await send(.filterSettingsLoaded(.failure(error)))
+                    }
+                )
 
             case let .permissionResponse(status):
                 state.permissionStatus = status
                 switch status {
                 case .authorized:
-                    return .send(.fetchEvents)
+                    return .merge(
+                        .send(.fetchEvents),
+                        .run { send in
+                            let calendars = await calendarClient.fetchAvailableCalendars()
+                            await send(.availableCalendarsResponse(calendars))
+                        }
+                    )
                 case .notDetermined:
                     return .run { send in
                         let granted = try await calendarClient.requestAccess()
@@ -88,6 +120,39 @@ nonisolated struct CalendarEventsFeature {
 
             case .openSettingsTapped:
                 return .none
+
+            case let .filterSettingsLoaded(.success(settings)):
+                state.excludedCalendarIDs = settings.excludedCalendarIDs
+                return .none
+
+            case .filterSettingsLoaded(.failure):
+                return .none
+
+            case .filterButtonTapped:
+                state.isFilterSheetPresented = true
+                return .run { send in
+                    let calendars = await calendarClient.fetchAvailableCalendars()
+                    await send(.availableCalendarsResponse(calendars))
+                }
+
+            case let .availableCalendarsResponse(calendars):
+                state.availableCalendars = calendars
+                return .none
+
+            case .dismissFilter:
+                state.isFilterSheetPresented = false
+                return .none
+
+            case let .toggleCalendar(calendarID):
+                if state.excludedCalendarIDs.contains(calendarID) {
+                    state.excludedCalendarIDs.remove(calendarID)
+                } else {
+                    state.excludedCalendarIDs.insert(calendarID)
+                }
+                let settings = CalendarFilterSettings(excludedCalendarIDs: state.excludedCalendarIDs)
+                return .run { _ in
+                    try await calendarFilterClient.saveSettings(settings)
+                }
             }
         }
     }

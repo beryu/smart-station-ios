@@ -12,9 +12,9 @@ struct CalendarEventsView: View {
                 loadingView
             } else if let errorMessage = store.errorMessage {
                 errorView(errorMessage)
-            } else if store.events.isEmpty && store.permissionStatus == .authorized {
+            } else if store.filteredEvents.isEmpty && store.permissionStatus == .authorized {
                 emptyView
-            } else if !store.events.isEmpty {
+            } else if !store.filteredEvents.isEmpty {
                 eventsListView
             }
         }
@@ -90,12 +90,12 @@ struct CalendarEventsView: View {
 
     private var eventsListView: some View {
         VStack(spacing: 8) {
-            ForEach(store.events) { event in
+            ForEach(store.filteredEvents) { event in
                 CalendarEventRow(
                     event: event,
                     isMasked: store.isMasked
                 )
-                if event.id != store.events.last?.id {
+                if event.id != store.filteredEvents.last?.id {
                     Divider()
                         .overlay(Color.white.opacity(0.1))
                 }
