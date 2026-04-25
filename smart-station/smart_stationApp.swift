@@ -12,9 +12,9 @@ import SwiftUI
 struct smart_stationApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(
-                store: Store(initialState: AppFeature.State()) {
-                    AppFeature()
+            DashboardView(
+                store: Store(initialState: DashboardFeature.State()) {
+                    DashboardFeature()
                 }
             )
         }
